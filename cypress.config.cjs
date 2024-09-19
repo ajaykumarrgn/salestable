@@ -1,6 +1,5 @@
 const { defineConfig } = require('cypress');
 const XLSX = require('xlsx'); // Import the xlsx library
-const axios = require('axios');
 const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config({path:'./.env'});
