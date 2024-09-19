@@ -1,4 +1,5 @@
 /* eslint-disable */
+ 
 describe('Sales Table Report', () => {
 
 before(() => {
