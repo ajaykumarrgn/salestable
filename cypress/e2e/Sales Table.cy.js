@@ -1,15 +1,15 @@
 /* eslint-disable */
- 
 describe('Sales Table Report', () => {
 
 before(() => {
 // Read data from the Excel file
-cy.task('readExcel',{ filepath: 'cypress/variables/sales_table.xlsx', sheetName: 'Sheet1' }).then((data) => {
+cy.task('readExcel', { filePath: 'https://github.com/Fathima786Irfana/Cypress-with-excel/cypress/variables/sales_table.xlsx', sheetName: 'Sheet1' }).then((data) => {
 // Log the data for debugging
         //cy.log(JSON.stringify(data));  // This will print the data in the Cypress test runner
         cy.wrap(data).as('testdata');
     });
 });
+
 
 it('Sales Table', () => {
     const username = Cypress.env('username');
