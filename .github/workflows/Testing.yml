@@ -19,17 +19,12 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Cypress
-        run: 
+      - name: Install dependencies
+        run: |
           npm install cypress --save-dev
           npm install xlsx
           npm install axios
 
-           # Add this step to download the XLSX file
-      - name: Download Excel file
-        run: |
-          mkdir -p cypress/variables
-          wget -O cypress/variables/sales_table.xlsx https://github.com/Fathima786Irfana/Cypress-with-excel/raw/main/cypress/variables/sales_table.xlsx
-
+          
       - name: Run Cypress test file
         run: npx cypress run --spec "cypress/e2e/*.cy.js" --config-file=./cypress.config.cjs
