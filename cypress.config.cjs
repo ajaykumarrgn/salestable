@@ -24,7 +24,7 @@ module.exports = defineConfig({
           // Get the sheet data
           const sheet = workbook.Sheets[sheetName];
           if (!sheet) {
-            throw new Error('Sheet with name ${sheetName} not found');
+            throw new Error(Sheet with name ${sheetName} not found);
           }
 
           // Convert sheet to JSON
