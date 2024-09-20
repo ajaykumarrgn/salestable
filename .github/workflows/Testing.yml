@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  
   cypress:
     runs-on: ubuntu-latest
     env:
@@ -20,13 +19,18 @@ jobs:
           node-version: 20
 
       - name: Install Cypress
-        run: 
-          npm install cypress --save-dev
-          npm install --save
-          npm install xlsx --save
-          npm install axios --save
+        run: npm install cypress --save-dev
 
+      - name: Install XLSX
+        run: npm install xlsx --save
 
+      - name: Install Axios
+        run: npm install axios --save
 
-      - name: Run Cypress test file
+      - name: Install Additional Cypress Plugins (Optional)
+        run: |
+          npm install @cypress/code-coverage --save-dev
+          npm install cypress-file-upload --save-dev
+
+      - name: Run Cypress Test Files
         run: npx cypress run --spec "cypress/e2e/*.cy.js" --config-file=./cypress.config.cjs
