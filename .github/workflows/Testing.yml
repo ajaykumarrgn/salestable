@@ -19,7 +19,7 @@ jobs:
           node-version: 20
 
       - name: Install Cypress
-        run: npm install cypress --save-dev
+        run: npm install cypress --save-dev 
 
       - name: Install XLSX
         run: npm install xlsx --save
