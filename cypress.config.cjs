@@ -17,6 +17,8 @@ module.exports = defineConfig({
       on('task', {
         readExcel({ filePath, sheetName }) {
           const normalizedPath = path.resolve(__dirname, 'cypress/variables/sales_table.xlsx');
+          console.log(`Normalized Path: ${normalizedPath}`);
+
 
           // Adjust the filePath for Windows
           //const normalizedPath = filePath.replace(/\\/g, '\\\\');
