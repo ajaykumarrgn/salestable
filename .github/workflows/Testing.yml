@@ -22,6 +22,7 @@ jobs:
       - name: Install Cypress
         run: 
           npm install cypress --save-dev
+          npm install --save
           npm install xlsx --save
           npm install axios --save
 
