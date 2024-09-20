@@ -15,10 +15,9 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       on('task', {
         readExcel({ filePath, sheetName }) {
-          const normalizedPath = path.resolve(__dirname, path); // Adjust the path
-    console.log(`Reading Excel from: ${normalizedPath}`);
+          const normalizedPath = path.resolve(__dirname, 'cypress/variables/sales_table.xlsx');    
           // Adjust the filePath for Windows
-          const normalizedPath = filePath.replace(/\\/g, '\\\\');
+         // const normalizedPath = filePath.replace(/\\/g, '\\\\');
 
           // Read the Excel file
           const workbook = XLSX.readFile(normalizedPath);
