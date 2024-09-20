@@ -27,7 +27,7 @@ jobs:
       - name: Install Axios
         run: npm install axios --save
 
-      - name: Install Additional Cypress Plugins (Optional)
+      - name: Install Additional Cypress Plugins optional 
         run: |
           npm install @cypress/code-coverage --save-dev
           npm install cypress-file-upload --save-dev
