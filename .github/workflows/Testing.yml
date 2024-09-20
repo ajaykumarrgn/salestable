@@ -26,5 +26,6 @@ jobs:
           npm install axios
 
 
+
       - name: Run Cypress test file
         run: npx cypress run --spec "cypress/e2e/*.cy.js" --config-file=./cypress.config.cjs
