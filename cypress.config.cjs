@@ -15,8 +15,10 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       on('task', {
         readExcel({ filePath, sheetName }) {
+          const normalizedPath = path.resolve(__dirname, filePath); // Adjust the path
+    console.log(`Reading Excel from: ${normalizedPath}`);
           // Adjust the filePath for Windows
-          const normalizedPath = filePath.replace(/\\/g, '\\\\');
+          //const normalizedPath = filePath.replace(/\\/g, '\\\\');
 
           // Read the Excel file
           const workbook = XLSX.readFile(normalizedPath);
@@ -24,7 +26,7 @@ module.exports = defineConfig({
           // Get the sheet data
           const sheet = workbook.Sheets[sheetName];
           if (!sheet) {
-            throw new Error(Sheet with name ${sheetName} not found);
+            throw new Error('Sheet with name ${sheetName} not found');
           }
 
           // Convert sheet to JSON
