@@ -1,7 +1,8 @@
-const axios = require('axios');
-const XLSX = require('xlsx'); // Import xlsx library
+const { defineConfig } = require('cypress');
+const XLSX = require('xlsx'); // Import the xlsx library
+const path = require('path');
 const dotenv = require('dotenv');
-dotenv.config({ path: './.env' });
+dotenv.config({path:'./.env'});
 
 module.exports = defineConfig({
   env: {
@@ -9,17 +10,17 @@ module.exports = defineConfig({
     password: process.env.PASSWORD,
   },
   e2e: {
+    watchForFileChanges: false,
     setupNodeEvents(on, config) {
       on('task', {
-        async readExcelFromGithub({ fileUrl, sheetName }) {
-          // Fetch the file from GitHub's raw content API
-          const githubRawUrl = `https://raw.githubusercontent.com/Fathima786Irfana/Cypress-with-excel/main/cypress/variables/sales_table.xlsx`;
+        readExcel({ filePath, sheetName }) {
+          // Adjust the filePath for Windows
+          const normalizedPath = filePath.replace(/\\/g, '\\\\');
 
-          const response = await axios.get(githubRawUrl, {
-            responseType: 'arraybuffer', // To handle binary data
-          });
+          // Read the Excel file
+          const workbook = XLSX.readFile(normalizedPath);
 
-          const workbook = XLSX.read(response.data, { type: 'buffer' });
+          // Get the sheet data
           const sheet = workbook.Sheets[sheetName];
           if (!sheet) {
             throw new Error(`Sheet with name ${sheetName} not found`);
@@ -27,9 +28,12 @@ module.exports = defineConfig({
 
           // Convert sheet to JSON
           const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+          // Return the JSON data
           return jsonData;
-        },
+        }
       });
+      // Implement other node event listeners here if needed
     },
   },
 });
