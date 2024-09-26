@@ -1,17 +1,14 @@
 /* eslint-disable */
-import * as env from './salesTableEnv.js';
- 
 describe('Sales Table Report', () => {
-
-before(() => {
-// Read data from the Excel file
-cy.task('readExcel', { filePath: 'C:/Users/lmnas/OneDrive/Documents/sales table.xlsx', sheetName: 'Sheet1' }).then((data) => {
-// Log the data for debugging
-        cy.log(JSON.stringify(data));  // This will print the data in the Cypress test runner
-        cy.wrap(data).as('testdata');
+  before(() => {
+    // Read data from the Excel file
+    cy.task('readExcel', { sheetName: 'Sheet1' }).then((data) => {
+      // Log the data for debugging
+      cy.log(JSON.stringify(data));  // This will print the data in the Cypress test runner
+      cy.wrap(data).as('testdata');
     });
+  });
 });
-
 it('Sales Table', () => {
 const username = Cypress.env('username');
 const password = Cypress.env('password');
