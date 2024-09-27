@@ -1,8 +1,9 @@
 const { defineConfig } = require('cypress');
-const XLSX = require('xlsx'); // Import the xlsx library
-const axios = require('axios'); // Import the axios library
+const XLSX = require('xlsx');
 const path = require('path');
 const dotenv = require('dotenv');
+const fs = require('fs');
+
 dotenv.config({path:'./.env'});
 
 module.exports = defineConfig({
@@ -14,24 +15,31 @@ module.exports = defineConfig({
     watchForFileChanges: false,
     setupNodeEvents(on, config) {
       on('task', {
-        readExcel({ sheetName }) {
-          const url = `https://raw.githubusercontent.com/Fathima786Irfana/Cypress-with-excel/main/cypress/variables/sales_table.xlsx`;
-          axios.get(url, { responseType: 'arraybuffer' })
-            .then(response => {
-              const workbook = XLSX.read(response.data, { type: 'array' });
-              const sheet = workbook.Sheets[sheetName];
-              if (!sheet) {
-                throw new Error(`Sheet with name ${sheetName} not found`);
-              }
-              const jsonData = XLSX.utils.sheet_to_json(sheet);
-              return jsonData;
-            })
-            .catch(error => {
-              throw new Error(`Error reading Excel file: ${error.message}`);
-            });
+        readExcel({ filePath, sheetName }) {
+          // Adjust the path for GitHub environment (relative to the repo)
+          const normalizedPath = path.join(__dirname, filePath);
+
+          // Check if the file exists
+          if (!fs.existsSync(normalizedPath)) {
+            throw new Error(`File not found at path: ${normalizedPath}`);
+          }
+
+          // Read the Excel file
+          const workbook = XLSX.readFile(normalizedPath);
+
+          // Get the sheet data
+          const sheet = workbook.Sheets[sheetName];
+          if (!sheet) {
+            throw new Error(`Sheet with name ${sheetName} not found`);
+          }
+
+          // Convert sheet to JSON
+          const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+          // Return the JSON data
+          return jsonData;
         }
       });
-      // Implement other node event listeners here if needed
     },
   },
 });
