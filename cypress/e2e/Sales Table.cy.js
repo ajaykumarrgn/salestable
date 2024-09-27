@@ -1,8 +1,11 @@
-/* eslint-disable */
 describe('Sales Table Report', () => {
+
   before(() => {
     // Read data from the Excel file
-    cy.task('readExcel', { sheetName: 'Sheet1' }).then((data) => {
+    cy.task('readExcel', { 
+      filePath: 'cypress/variables/sales_table.xlsx',  // Relative path for GitHub environment
+      sheetName: 'Sheet1'
+    }).then((data) => {
       // Log the data for debugging
       cy.log(JSON.stringify(data));  // This will print the data in the Cypress test runner
       cy.wrap(data).as('testdata');
