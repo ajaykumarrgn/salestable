@@ -7,8 +7,8 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
     env:
-      USER_NAME: ${{ vars.TEST_USER_NAME }}
-      PASSWORD: ${{ vars.TEST_PASSWORD }}
+      USER_NAME: ${{ secrets.TEST_USER_NAME }}  # Use secrets for sensitive data
+      PASSWORD: ${{ secrets.TEST_PASSWORD }}      # Use secrets for sensitive data
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -16,21 +16,18 @@ jobs:
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
 
-      - name: Install Cypress
-        run: npm install cypress --save-dev 
+      - name: Install dependencies
+        run: npm install
 
-      - name: Install XLSX
-        run: npm install xlsx --save
-
-      - name: Install Axios
-        run: npm install axios --save
-
-      - name: Install Additional Cypress Plugins optional
+      - name: Install Additional Packages
         run: |
+          npm install cypress --save-dev
+          npm install xlsx --save
+          npm install axios --save
           npm install @cypress/code-coverage --save-dev
           npm install cypress-file-upload --save-dev
 
-      - name: Run Cypress Test Files
-        run: npx cypress run --spec "cypress/e2e/*.cy.js" --config-file=./cypress.config.cjs
+      - name: Run Cypress Tests
+        run: npx cypress run --spec "cypress/e2e/*.cy.js" --config-file=./cypress.config.cjs  
