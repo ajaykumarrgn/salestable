@@ -1,9 +1,8 @@
 const { defineConfig } = require('cypress');
-const XLSX = require('xlsx');
+const XLSX = require('xlsx'); // Import the xlsx library
+const axios = require('axios');
 const path = require('path');
 const dotenv = require('dotenv');
-const fs = require('fs');
-
 dotenv.config({path:'./.env'});
 
 module.exports = defineConfig({
@@ -13,16 +12,14 @@ module.exports = defineConfig({
   },
   e2e: {
     watchForFileChanges: false,
+    // baseUrl: 'http://qsgbcz.docker.localhost',
     setupNodeEvents(on, config) {
       on('task', {
         readExcel({ filePath, sheetName }) {
-          // Adjust the path for GitHub environment (relative to the repo)
-          const normalizedPath = path.join(__dirname, filePath);
+          const normalizedPath = path.resolve(__dirname, 'cypress/variables/sales_table.xlsx');
 
-          // Check if the file exists
-          if (!fs.existsSync(normalizedPath)) {
-            throw new Error(`File not found at path: ${normalizedPath}`);
-          }
+          // Adjust the filePath for Windows
+          //const normalizedPath = filePath.replace(/\\/g, '\\\\');
 
           // Read the Excel file
           const workbook = XLSX.readFile(normalizedPath);
@@ -40,6 +37,7 @@ module.exports = defineConfig({
           return jsonData;
         }
       });
+      // Implement other node event listeners here if needed
     },
   },
 });
