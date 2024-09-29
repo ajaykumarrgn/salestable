@@ -16,7 +16,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       on('task', {
         readExcel({ filePath, sheetName }) {
-          const normalizedPath = path.resolve(__dirname, 'cypress/e2e/variables/sales_table.xlsx');
+          const normalizedPath = path.resolve(__dirname, './e2e/variables/sales_table.xlsx');
 
           // Adjust the filePath for Windows
           //const normalizedPath = filePath.replace(/\\/g, '\\\\');
