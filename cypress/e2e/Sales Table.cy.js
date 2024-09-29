@@ -4,7 +4,7 @@ describe('Sales Table Report', () => {
 
 before(() => {
 // Read data from the Excel file
-cy.task('readExcel', { filepath: 'cypress/e2e/variables/sales_table.xlsx', sheetName: 'Sheet1' }).then((data) => {
+cy.task('readExcel', { filepath: './e2e/variables/sales_table.xlsx', sheetName: 'Sheet1' }).then((data) => {
 // Log the data for debugging
         //cy.log(JSON.stringify(data));  // This will print the data in the Cypress test runner
         cy.wrap(data).as('testdata');
